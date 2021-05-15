@@ -1,0 +1,28 @@
+job ('maven_job_dsl'){
+  description('Sample description for Child job created by Parent Job')
+  
+  scm{
+       github('jenkins-docs/simple-java-maven-app', 'master')
+    }
+  
+  steps{
+    
+    maven{
+     mavenInstallation ('jenkins-maven')
+     goals('clean')
+     goals('package')
+     goals('test')
+    }
+    
+    shell(""" 
+      echo 'Buildig JAR'
+      java -jar /var/jenkins_home/workspace/maven_project/target/my-app-1.0-SNAPSHOT.jar 
+    """)
+}
+  
+  publishers{
+   archiveArtifacts('target/*.jar')
+   archiveJunit('target/surefire-reports/TEST-com.mycompany.app.AppTest.xml')
+  }
+  
+}
