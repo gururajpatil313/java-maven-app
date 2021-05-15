@@ -1,4 +1,4 @@
-job ('maven_job_dsl'){
+job ('maven_job_dsl_git'){
   description('Sample description for Child job created by Parent Job')
   
   scm{
